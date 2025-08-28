@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Contoh Notifikasi Web</title>
+    <style>
+        body {
+            font-family: sans-serif;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+            background-color: #f0f0f0;
+        }
+        button {
+            padding: 15px 30px;
+            font-size: 18px;
+            font-weight: bold;
+            cursor: pointer;
+            border: none;
+            border-radius: 8px;
+            background-color: #28a745;
+            color: white;
+            transition: background-color 0.3s ease;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+        }
+        button:hover {
+            background-color: #218838;
+        }
+    </style>
+</head>
+<body>
+
+    <button id="notifButton">Tampilkan Notifikasi</button>
+
+    <script>
+        // Mengambil elemen tombol dari HTML
+        const notifButton = document.getElementById('notifButton');
+
+        // Menambahkan event listener saat tombol diklik
+        notifButton.addEventListener('click', () => {
+
+            // Langkah 1: Periksa apakah browser mendukung Notifikasi API
+            if (!('Notification' in window)) {
+                alert('Browser Anda tidak mendukung Notifikasi.');
+                return;
+            }
+
+            // Langkah 2: Minta izin kepada pengguna
+            Notification.requestPermission().then(permission => {
+                
+                // Jika izin diberikan, tampilkan notifikasi
+                if (permission === 'granted') {
+                    // Langkah 3: Membuat objek Notifikasi baru
+                    new Notification('Halo, Ini Notifikasi Web!', {
+                        body: 'Pesan dari website Anda sudah siap.',
+                        icon: 'https://cdn-icons-png.flaticon.com/512/3670/3670150.png'
+                    });
+                } else {
+                    alert('Anda menolak izin notifikasi.');
+                }
+            });
+        });
+    </script>
+
+</body>
+</html>
